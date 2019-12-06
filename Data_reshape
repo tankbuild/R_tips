@@ -1,0 +1,15 @@
+library(reshape2)
+library(tidyr)
+library(dplyr)
+
+# Data reshape
+# example data : `mini_iris`
+(mini_iris <- iris[c(1, 51, 101), ])
+
+# melt (wide to long)
+(melted1 <- mini_iris %>% melt(id.vars = "Species"))         # on reshape2
+(melted2 <- mini_iris %>% gather(variable, value, -Species)) # on tidyr
+
+# cast (long to wide)
+melted1 %>% dcast(Species ~ variable, value.var = "value") # on reshape2
+melted2 %>% spread(variable, value)                        # on tidyr
